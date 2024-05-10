@@ -1,9 +1,6 @@
 package com.anand.ownshop.village;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Village {
@@ -12,9 +9,15 @@ public class Village {
     private Integer villageId;
     private String villageName;
 
+
     public Village(){
 
     }
+
+
+
+
+
     public Village(Integer villageId, String villageName) {
         this.villageId = villageId;
         this.villageName = villageName;
