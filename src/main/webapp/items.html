@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items List</title>
+</head>
+<body>
+<h2>Items List</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody id="itemsTable">
+    <!-- Items will be loaded here -->
+    </tbody>
+</table>
+
+<script>
+    async function fetchItems() {
+        try {
+            let response = await fetch("http://localhost:1016/items");
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            let items = await response.json();  // ✅ Parse JSON
+
+            let tableBody = document.getElementById("itemsTable");
+            tableBody.innerHTML = "";  // Clear previous data
+
+            items.forEach(item => {
+                let row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.amount}</td>
+                    <td>${item.quantity}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    }
+
+    // Call function when the page loads
+    window.onload = fetchItems;
+</script>
+</body>
+</html>

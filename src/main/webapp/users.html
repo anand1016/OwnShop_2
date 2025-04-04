@@ -1,0 +1,66 @@
+<!-- users.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users - OwnShop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; background: #fff; }
+        h1 { color: #333; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #f9f9f9;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+<h1>User List</h1>
+<table id="userTable">
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Father's Name</th>
+        <th>Mobile</th>
+        <th>Village</th>
+        <th>Total Bills</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    fetch('/users')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector("#userTable tbody");
+            data.forEach(user => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${user.userId}</td>
+                    <td>${user.userName}</td>
+                    <td>${user.fatherName}</td>
+                    <td>${user.number}</td>
+                    <td>${user.village?.villageName || 'N/A'}</td>
+                    <td>${user.creditBills?.length || 0}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(err => {
+            document.body.innerHTML += `<p style="color:red;">Failed to load user data. Error: ${err}</p>`;
+        });
+</script>
+</body>
+</html>

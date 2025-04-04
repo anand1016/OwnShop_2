@@ -12,6 +12,7 @@ public class ItemContoller {
 
     @RequestMapping("/items")
     public List<Item> getAllItem(){
+        System.out.println("in correct path");
         return service.getAllItem();
     }
 
