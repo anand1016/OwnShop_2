@@ -13,11 +13,6 @@ public class Village {
     public Village(){
 
     }
-
-
-
-
-
     public Village(Integer villageId, String villageName) {
         this.villageId = villageId;
         this.villageName = villageName;

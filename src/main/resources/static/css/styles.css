@@ -1,0 +1,62 @@
+/* Common styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    background: #f2f2f2;
+}
+
+/* Header styles */
+h1 {
+    color: #333;
+}
+
+/* Link styles */
+a {
+    display: block;
+    margin: 10px 0;
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background: #e9ecef;
+}
+
+/* Additional specific styles (if needed) */
+
+/* For dashboard page */
+.dashboard-container {
+    background-color: #e9ecef;
+    padding: 20px;
+}
+
+/* For village page */
+.village-table-container {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+}
+
+/* Adjust the table style for village page */
+.village-table th {
+    background-color: #f2f2f2;
+    color: #007BFF;
+}

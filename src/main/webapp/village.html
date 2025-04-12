@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Village List</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Village Details</h1>
+        <nav>
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/users.html">Users</a>
+            <a href="/items.html">Items</a>
+        </nav>
+    </header>
+
+    <section class="village-list">
+        <h2>List of Villages</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Village ID</th>
+                <th>Village Name</th>
+            </tr>
+            </thead>
+            <tbody id="villageTable">
+            <!-- Data will be populated dynamically -->
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/village') // Replace with the actual API path for villages
+            .then(response => response.json())
+            .then(villages => {
+                const villageTable = document.getElementById('villageTable');
+                villages.forEach(village => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${village.villageId}</td>
+                        <td>${village.villageName}</td>
+                    `;
+                    villageTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching village data:', error));
+    });
+</script>
+</body>
+</html>
