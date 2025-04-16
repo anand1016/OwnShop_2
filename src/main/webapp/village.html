@@ -14,14 +14,19 @@
             <a href="/dashboard.html">Dashboard</a>
             <a href="/users.html">Users</a>
             <a href="/items.html">Items</a>
+            <a href="/addVillage.html">Add New Village</a>
         </nav>
     </header>
 
     <section class="village-list">
         <h2>List of Villages</h2>
+        <button id="updateVillageButton" disabled>Update Village</button>
+        <button id="deleteVillageButton" disabled>Delete Village</button>
+
         <table>
             <thead>
             <tr>
+                <th>Select</th>
                 <th>Village ID</th>
                 <th>Village Name</th>
             </tr>
@@ -35,13 +40,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('/village') // Replace with the actual API path for villages
+        fetch('/village') // Fetch villages from API
             .then(response => response.json())
             .then(villages => {
                 const villageTable = document.getElementById('villageTable');
                 villages.forEach(village => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
+                        <td><input type="checkbox" class="villageCheckbox" data-id="${village.villageId}"></td>
                         <td>${village.villageId}</td>
                         <td>${village.villageName}</td>
                     `;
@@ -49,6 +55,55 @@
                 });
             })
             .catch(error => console.error('Error fetching village data:', error));
+
+        const updateVillageButton = document.getElementById('updateVillageButton');
+        const deleteVillageButton = document.getElementById('deleteVillageButton');
+
+        // Handle checkbox selection to enable/disable buttons
+        document.getElementById('villageTable').addEventListener('change', function() {
+            const selectedCheckboxes = document.querySelectorAll('.villageCheckbox:checked');
+            if (selectedCheckboxes.length === 1) {
+                // Enable buttons when exactly one checkbox is selected
+                updateVillageButton.disabled = false;
+                deleteVillageButton.disabled = false;
+            } else {
+                // Disable buttons if no checkbox or multiple checkboxes are selected
+                updateVillageButton.disabled = true;
+                deleteVillageButton.disabled = true;
+            }
+        });
+
+        // Handle Update button click
+        updateVillageButton.addEventListener('click', function() {
+            const selectedCheckbox = document.querySelector('.villageCheckbox:checked');
+            const villageId = selectedCheckbox ? selectedCheckbox.getAttribute('data-id') : null;
+            if (villageId) {
+                window.location.href = `/updateVillage.html?villageId=${villageId}`; // Redirect to update page
+            }
+        });
+
+        // Handle Delete button click
+        deleteVillageButton.addEventListener('click', function() {
+            const selectedCheckbox = document.querySelector('.villageCheckbox:checked');
+            const villageId = selectedCheckbox ? selectedCheckbox.getAttribute('data-id') : null;
+            if (villageId && confirm('Are you sure you want to delete this village?')) {
+                fetch(`/village/${villageId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Village deleted successfully.');
+                        window.location.reload(); // Reload page to update list
+                    } else {
+                        alert('Failed to delete village.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting village:', error);
+                    alert('Error deleting village.');
+                });
+            }
+        });
     });
 </script>
 </body>

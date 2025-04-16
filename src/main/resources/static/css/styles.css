@@ -10,6 +10,14 @@ h1 {
     color: #333;
 }
 
+form {
+    background: #fff;
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
 /* Link styles */
 a {
     display: block;

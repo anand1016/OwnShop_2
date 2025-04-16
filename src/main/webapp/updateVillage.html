@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Village</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Update Village</h1>
+        <nav>
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/users.html">Users</a>
+            <a href="/items.html">Items</a>
+            <a href="/addVillage.html">Add New Village</a>
+        </nav>
+    </header>
+
+    <section class="update-village">
+        <h2>Update Village Name</h2>
+        <form id="updateVillageForm">
+            <label for="villageName">Village Name:</label>
+            <input type="text" id="villageName" name="villageName" required>
+            <button type="submit">Update Village</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const villageId = params.get('villageId');
+
+        if (villageId) {
+            // Fetch current village data to pre-populate the form
+            fetch(`/village/${villageId}`)
+                .then(response => response.json())
+                .then(village => {
+                    document.getElementById('villageName').value = village.villageName;
+                })
+                .catch(error => console.error('Error fetching village data:', error));
+
+            // Handle form submission to update village
+            document.getElementById('updateVillageForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const updatedVillageName = document.getElementById('villageName').value;
+
+                fetch(`/village/${villageId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ villageName: updatedVillageName })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Village updated successfully.');
+                        window.location.href = '/village.html'; // Redirect to village list page
+                    } else {
+                        alert('Failed to update village.');
+                    }
+                })
+                .catch(error => console.error('Error updating village:', error));
+            });
+        }
+    });
+</script>
+</body>
+</html>

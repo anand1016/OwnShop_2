@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Village</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Add a New Village</h1>
+<form id="villageForm">
+    <label for="villageName">Village Name:</label>
+    <input type="text" id="villageName" name="villageName" required>
+    <button type="submit">Add Village</button>
+    <div class="message" id="message"></div>
+</form>
+
+<script>
+    document.getElementById('villageForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const villageName = document.getElementById('villageName').value;
+
+        fetch('/village', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ villageName })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Failed to add village');
+        })
+        .then(data => {
+            document.getElementById('message').textContent = `Village "${data.villageName}" added successfully!`;
+            document.getElementById('villageForm').reset();
+        })
+        .catch(error => {
+            document.getElementById('message').textContent = error.message;
+        });
+    });
+</script>
+
+</body>
+</html>

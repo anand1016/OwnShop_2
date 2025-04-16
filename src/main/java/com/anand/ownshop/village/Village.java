@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Village {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer villageId;
     private String villageName;
 
