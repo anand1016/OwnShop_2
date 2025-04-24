@@ -135,3 +135,52 @@ button:hover {
     font-weight: bold;
 }
 
+
+/* Common styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for centralizing content */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Header styling */
+header h1 {
+    font-size: 2rem;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+/* Navigation links styling */
+nav a {
+    display: block;
+    padding: 10px;
+    font-size: 18px;
+    color: #007BFF;
+    text-decoration: none;
+    margin: 10px 0;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
