@@ -27,11 +27,11 @@ public class VillageService {
     }
 
     public void addVillage( Village v){
-       //TODO : add condition to validate if village already added or not based on Name
         logger.info("Fetching details before adding if Village name already exits");
         Optional<Village> v1=repository.findByVillageNameIgnoreCase(v.getVillageName());
         if(v1.isPresent()) {
             logger.warn("Village already exist with id {}",v1.get().getVillageId());
+            throw new IllegalArgumentException("Village name already Exits");
         }
         else{
             logger.info("no village found with name {} proceding with add command",v.getVillageName());
@@ -54,7 +54,7 @@ public class VillageService {
         }
         else{
             logger.info("Village search returned null");
-            //TODO: should though exception in case village not found
+            throw new IllegalArgumentException("Village not found");
         }
 
     }
@@ -70,7 +70,7 @@ public class VillageService {
         }
         else{
             logger.info("Village search returned null in delete process");
-            //TODO: should though exception in case village not found
+            throw new IllegalArgumentException("Village not found");
         }
 
     }

@@ -2,17 +2,28 @@
 <html>
 <head>
     <title>Add Village</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
-<h1>Add a New Village</h1>
-<form id="villageForm">
-    <label for="villageName">Village Name:</label>
-    <input type="text" id="villageName" name="villageName" required>
-    <button type="submit">Add Village</button>
-    <div class="message" id="message"></div>
-</form>
+<div class="container">
+    <header>
+        <h1>Add a New Village</h1>
+        <nav>
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/users.html">Users</a>
+            <a href="/items.html">Items</a>
+            <a href="/village.html">View Villages</a>
+        </nav>
+    </header>
+
+    <form id="villageForm" class="form-box">
+        <label for="villageName">Village Name:</label>
+        <input type="text" id="villageName" name="villageName" required>
+        <button type="submit">Add Village</button>
+        <div class="message" id="message"></div>
+    </form>
+</div>
 
 <script>
     document.getElementById('villageForm').addEventListener('submit', function(e) {
@@ -29,8 +40,9 @@
         .then(response => {
             if (response.ok) {
                 return response.json();
+            } else {
+                return response.text().then(text => { throw new Error(text); });
             }
-            throw new Error('Failed to add village');
         })
         .then(data => {
             document.getElementById('message').textContent = `Village "${data.villageName}" added successfully!`;
